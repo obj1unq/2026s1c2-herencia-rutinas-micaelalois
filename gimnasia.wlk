@@ -50,47 +50,56 @@ class RemoDeCompeticion inherits Remo (intensidad = 1.7){
     
 }
 
+class Persona{
+    var property kilosPorCalorias = 2
+    var property tiempo = 0
+    var property peso = 3
 
+method cantidadDeKilosPerdidos(rutina){
+    return rutina.cantidadDeCaloriasQuemadas()/ kilosPorCalorias
+}
+
+method aplicarRutina(rutina){
+    self.validarSiPuedeRealizarLaRutina(rutina)
+    peso= peso- self.cantidadDeKilosPerdidos(rutina)
+}
+
+method validarSiPuedeRealizarLaRutina(rutina) //METODO ABSTRACTO
+
+
+
+
+}
+class Sedentaria inherits Persona(kilosPorCalorias = 7000){
+
+
+override method validarSiPuedeRealizarLaRutina(rutina){
+    if(peso< 50){
+        self.error("No es posible aplicar la rutina ya que el peso es menor a 50 kg")
+    }
+}
+
+
+}
+
+class Atleta inherits Persona (kilosPorCalorias= 8000, tiempo = 90){
+
+    override method cantidadDeKilosPerdidos(rutina){
+         return (rutina.super()-1)
+}
+
+    override method validarSiPuedeRealizarLaRutina(rutina){
+        if(rutina.cantidadDeCaloriasQuemadas() < 10000){
+            self.error("La rutina tiene un gasto menor a diez mil calorias")
+        }
+    }
+
+
+
+}
 
 /*
 
-
-Las personas hacen distintas rutinas de ejercicios.
-
-El tiempo que ejercitan una rutina depende del tipo de persona en cuestión
-
-Cuidado, no siempre pueden hacer una rutina, cada tipo de persona tiene su regla
-
-Cuando realizan una rutina su peso baja una cantidad de kilos que dependerá de la cantidad de calorías que quema la rutina durante el tiempo en que la persona la practica, y de la cantidad de kilos por caloría que que depende tipo de persona:
-
-Peso que pierde al hacer una rutina: calorias que baja la rutina en el tiempo que la practica / kilosPorCaloríaQuePierde
-
-Mientras que la primera parte de la fórmula se resolvió en el punto anterior, la segunda se detalla para cada tipo de persona:
-
-Requerimientos:
-
-Saber cuanto peso perdería una persona al aplicar una rutina
-Que una persona aplique una rutina alterando su peso
-Personas sedentarias:
-La cantidad de kilosPorCaloría de las personas sedentarias es 7000
-
-El tiempo que ejercita una rutina se establece para cada persona sedentaria
-
-solo aplican una rutina si su peso es mayor a 50
-
-Ejemplos
-
-Calamardo es una persona sedentaria de peso 60 y usa 5 minutos por rutina
-
-Al practicar las rutinas del punto anterior el peso final es:
-
-Correr en la playa: 60 - (360/7000) = 59.948
-Correr la Maraton de BA: 60 - (900/7000) = 59.871
-Remar en el delta: 60 - (520/7000) = 59.925
-Remar en el camino de los remeros: 60 - (510/7000) = 59.927
-Pero si le cambiamos el peso a calamardo para que sea 40, entonces no podría practicar ninguna de esas rutinas, por ejemplo correr en la playa y el peso se mantendría en 40.
-
-Nota: Todos los resultados estan truncados a 3 decimales. usar miNumero.truncate(3) en los tests
 
 Personas atletas
 Las personas atletas tienen una variación en su fórmula para calcular el peso al practicar una rutina, porque siempre pierden un kilo menos que el resto de las personas
