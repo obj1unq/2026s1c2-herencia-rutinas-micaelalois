@@ -98,33 +98,61 @@ class Atleta inherits Persona (kilosPorCalorias= 8000, tiempo = 90){
 
 }
 
+//Problemas con el tiempo 
+class Club {
+    var property predios = []
+
+    method mejorPredioPara(persona){
+        return predios.max({predio => predio.rutinas().cantidadDeCaloriasQuemadas()})
+
+    }
+
+    method prediosTranquisPara(persona){
+        return predios.any({predio => predio.rutinas().cantidadDeCaloriasQuemadas()<500})
+
+    }
+
+    method rutinaMasExigentePara(persona){
+        return predios.map({rutina => rutina.max({predios.rutinas().cantidadDeCaloriasQuemadas()})})
+    }
+
+   
+}
+
+class Predio{
+    var property rutinas = []
+
+    
+}
 /*
+Un club tiene varios predios De un predio se conoce las rutinas que se pueden practicar Se pide:
 
+El mejor predio de un club para una persona: Es el predio que más calorías le haría quemar a esa persona si ésta practicara
+ todas las rutinas una vez.
 
-Personas atletas
-Las personas atletas tienen una variación en su fórmula para calcular el peso al practicar una rutina, porque siempre pierden un kilo menos que el resto de las personas
+Los predios tranquis de un club para una persona: Es el conjunto de predios que tienen al menos una rutina que le hace gastar menos
+ de 500 calorias a la persona
 
-Formula de peso que se pierde al hacer una rutina: (calorias que baja la rutina / kilosPorCaloría) - 1 Nota: La primera parte es igual que la fórmula para todas las personas
+Las rutinas más exigentes del club para una persona: Es el conjunto formado por la rutina más exigente de cada predio para esa persona.
+ La rutina más exigente es la que más calorías le hace quemar a esa persona
 
-La cantidad de kilosPorCaloría de las personas atletas es 8000
+** Ejemplos **
 
-El tiempo que ejercita una rutina es siempre 90.
+El club barrial tiene dos predios. El náutico, desde dónde se puede remar en el delta y en el camino de los remeros, y el recreo, dónde se puede correr por la playa y correr la maratón de buenos aires.
 
-Solo realizan una rutina si las calorías que consumiría al realizarla es mayor a 10000
+El mejor predio del club barrial para bob es el recreo. Ya que le hace gastar 35700 mientras que náutico le hace gastar 22110
 
-Ejemplos:
+El mejor predio del club barrial para calamardo es el recreo. Ya que le hace gastar 1260 mientras que náutico le hace gastar 1030
 
-Bob es una persona atleta de peso 40
+Para bob no hay predios tranquis en el club barrial,
 
-Al practicar las rutinas del punto anterior peso final es:
+Para calamardo, el conjunto de predios tranquis solo tiene a el recreo, ya que ahí puede correr por la playa gastando solo 360 calorías
 
-Correr en la playa: 40 - ((10200/8000) - 1) = 39.725
-Correr la Maraton de BA: 40 - ((25500/8000) - 1) = 37.812
-Remar en el delta: No se puede porque las calorías de esta rutina es menor a 10000, el peso se mantiene en 40
-Remar en el camino de los remeros: 40 - ((12750/8000) - 1) = 39.406 Nota: Todos los resultados estan truncados a 3 decimales. usar miNumero.truncate(3) en los tests
+-para bob las rutinas más exigentes del club barrial son la maratón de buenos aires y remar en el camino de los remeros.
+
+-para calamardo las rutinas más exigentes del club barrial son la maratón de buenos aires y remar en el delta.
 
 */
-
 
 
 
